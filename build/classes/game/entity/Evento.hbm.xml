@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2018 09:12:31 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="game.entity.Evento" table="evento" catalog="gamew" optimistic-lock="version">
+        <id name="pkCodEvent" type="java.lang.Integer">
+            <column name="pk_cod_event" />
+            <generator class="identity" />
+        </id>
+        <property name="nome" type="string">
+            <column name="nome" length="100" not-null="true" />
+        </property>
+        <property name="horario" type="string">
+            <column name="horario" length="5" not-null="true" />
+        </property>
+        <property name="dataEvent" type="string">
+            <column name="data_event" length="10" not-null="true" />
+        </property>
+        <property name="sala" type="string">
+            <column name="sala" length="2" not-null="true" />
+        </property>
+        <property name="palestrante" type="string">
+            <column name="palestrante" length="100" not-null="true" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="tipo" length="100" not-null="true" />
+        </property>
+        <set name="RUsuarioEventos" table="r_usuario_evento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="fk_cod_event" not-null="true" />
+            </key>
+            <one-to-many class="game.entity.RUsuarioEvento" />
+        </set>
+    </class>
+</hibernate-mapping>

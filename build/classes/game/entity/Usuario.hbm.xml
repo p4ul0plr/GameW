@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2018 09:12:31 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="game.entity.Usuario" table="usuario" catalog="gamew" optimistic-lock="version">
+        <id name="pkCpf" type="string">
+            <column name="pk_cpf" length="11" />
+            <generator class="assigned" />
+        </id>
+        <property name="nome" type="string">
+            <column name="nome" length="100" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" not-null="true" />
+        </property>
+        <property name="senha" type="string">
+            <column name="senha" length="10" not-null="true" />
+        </property>
+        <property name="telefone" type="string">
+            <column name="telefone" length="20" />
+        </property>
+        <property name="endereco" type="string">
+            <column name="endereco" length="100" not-null="true" />
+        </property>
+        <property name="curso" type="string">
+            <column name="curso" length="100" />
+        </property>
+        <property name="instituicao" type="string">
+            <column name="instituicao" length="100" />
+        </property>
+        <property name="dataNasc" type="string">
+            <column name="data_nasc" length="20" not-null="true" />
+        </property>
+        <set name="RUsuarioEventos" table="r_usuario_evento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="fk_cpf" length="11" not-null="true" />
+            </key>
+            <one-to-many class="game.entity.RUsuarioEvento" />
+        </set>
+    </class>
+</hibernate-mapping>

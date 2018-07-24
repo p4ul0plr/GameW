@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2018 09:12:31 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="game.entity.RUsuarioEvento" table="r_usuario_evento" catalog="gamew" optimistic-lock="version">
+        <composite-id name="id" class="game.entity.RUsuarioEventoId">
+            <key-property name="fkCpf" type="string">
+                <column name="fk_cpf" length="11" />
+            </key-property>
+            <key-property name="fkCodEvent" type="int">
+                <column name="fk_cod_event" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="evento" class="game.entity.Evento" update="false" insert="false" fetch="select">
+            <column name="fk_cod_event" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuario" class="game.entity.Usuario" update="false" insert="false" fetch="select">
+            <column name="fk_cpf" length="11" not-null="true" />
+        </many-to-one>
+        <property name="presenca" type="int">
+            <column name="presenca" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
