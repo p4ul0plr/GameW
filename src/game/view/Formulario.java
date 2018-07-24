@@ -9,7 +9,6 @@ import game.entity.Evento;
 import game.entity.Usuario;
 import game.util.HibernateUtil;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -33,7 +32,7 @@ public class Formulario extends javax.swing.JDialog {
         ArrayList<Evento> evento = (ArrayList<Evento>) c.list();
         session.getTransaction().commit();
         evento.forEach((evento1) -> {
-            cbListaPalestras.addItem(evento1);
+            cbListaPalestras.addItem(evento1.getNome());
         });
         
     }
@@ -401,9 +400,6 @@ public class Formulario extends javax.swing.JDialog {
         
         s.getTransaction().commit();
         
-        Evento e = (Evento) cbListaPalestras.getSelectedItem();
-        
-        JOptionPane.showMessageDialog(null, "ID: "+e.getPkCodEvent());
     }//GEN-LAST:event_jblFinalizarInscricaoActionPerformed
 
     private void cbListaPalestrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListaPalestrasActionPerformed

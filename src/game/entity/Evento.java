@@ -104,10 +104,7 @@ public class Evento  implements java.io.Serializable {
         this.RUsuarioEventos = RUsuarioEventos;
     }
 
-     @Override
-    public String toString() {
-        return getNome();
-    }
+
 
 
 }
