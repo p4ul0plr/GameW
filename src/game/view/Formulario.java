@@ -25,6 +25,16 @@ public class Formulario extends javax.swing.JDialog {
     public Formulario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Criteria c = session.createCriteria(Evento.class);
+        ArrayList<Evento> evento = (ArrayList<Evento>) c.list();
+        session.getTransaction().commit();
+        evento.forEach((evento1) -> {
+            cbListaPalestras.addItem(evento1.getNome());
+        });
+        
     }
 
     /**
@@ -63,7 +73,7 @@ public class Formulario extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JFormattedTextField();
         jPanel7 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbListaPalestras = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jblFinalizarInscricao = new javax.swing.JButton();
 
@@ -258,7 +268,11 @@ public class Formulario extends javax.swing.JDialog {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Eventos"));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbListaPalestras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbListaPalestrasActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Palestras:");
 
@@ -270,7 +284,7 @@ public class Formulario extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addGap(64, 64, 64)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbListaPalestras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -279,7 +293,7 @@ public class Formulario extends javax.swing.JDialog {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbListaPalestras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
@@ -383,9 +397,14 @@ public class Formulario extends javax.swing.JDialog {
         //s.save(evento);
         //s.save(rel);
         //session.getTransaction().commit();
+        
         s.getTransaction().commit();
         
     }//GEN-LAST:event_jblFinalizarInscricaoActionPerformed
+
+    private void cbListaPalestrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListaPalestrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbListaPalestrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,8 +449,8 @@ public class Formulario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Object> cbListaPalestras;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
