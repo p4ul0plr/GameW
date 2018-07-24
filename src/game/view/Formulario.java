@@ -1,9 +1,12 @@
 package game.view;
 
 import game.entity.Evento;
+import game.entity.RUsuarioEvento;
+import game.entity.RUsuarioEventoId;
 import game.entity.Usuario;
 import game.util.HibernateUtil;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -331,6 +334,7 @@ public class Formulario extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
     private ArrayList<Evento> capturarEventos () {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -339,9 +343,10 @@ public class Formulario extends javax.swing.JDialog {
         session.getTransaction().commit();
         return evento;
     }
+    
     private void jblFinalizarInscricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jblFinalizarInscricaoActionPerformed
         // TODO add your handling code here:
-        Usuario user ;
+        Usuario usuario ;
         String nome = txtNome.getText();
         String email = txtEmail.getText();
         String senha = txtSenha.getText();
@@ -352,13 +357,13 @@ public class Formulario extends javax.swing.JDialog {
         String nasc = txtNasc.getText();
         String cpf = txtCpf.getText();
         
-        user = new Usuario(cpf, nome, email, senha, endereco, nasc);
+        usuario = new Usuario(cpf, nome, email, senha, endereco, nasc);
         
         //String consulta = "from Evento a where a.pkCodEvent like '6%'";
          
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         s.beginTransaction();
-        s.save(user);
+        s.save(usuario);
        
         //RUsuarioEventoId relacao = new RUsuarioEventoId(cpf, 6);
         //RUsuarioEvento rel = new RUsuarioEvento(relacao, evento, user, 1);
@@ -381,13 +386,20 @@ public class Formulario extends javax.swing.JDialog {
         //s.save(evento);
         //s.save(rel);
         //session.getTransaction().commit();
+        
+        Evento evento = (Evento) cbListaPalestras.getSelectedItem();
+        //JOptionPane.showMessageDialog(null, "ID: "+e.getPkCodEvent());
+        RUsuarioEventoId rUsuarioEventoId = new RUsuarioEventoId(cpf, evento.getPkCodEvent());
+        RUsuarioEvento rUsuarioEvento = new RUsuarioEvento(rUsuarioEventoId, evento, usuario, 0);
+        s.save(rUsuarioEvento);
         s.getTransaction().commit();
-        String eventoSelecionado = cbListaPalestras.getSelectedItem().toString();
+        
+        /*String eventoSelecionado = cbListaPalestras.getSelectedItem().toString();
         
         capturarEventos().forEach((evento1) -> {
             if(evento1.getNome().equals(eventoSelecionado))
                 System.out.println(evento1.getPalestrante());
-        });
+        });*/
     }//GEN-LAST:event_jblFinalizarInscricaoActionPerformed
 
     private void cbListaPalestrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListaPalestrasActionPerformed
