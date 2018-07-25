@@ -5,6 +5,8 @@
  */
 package game.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author UNIVASF
@@ -121,6 +123,8 @@ public class Login extends javax.swing.JDialog {
         } else {
             dispose();
             VisualizarInscricao insc = new VisualizarInscricao(this, true);
+            insc.setCpf(txtCpf.getText());
+            //JOptionPane.showMessageDialog(null, "CPF: "+insc.getCpf());
             insc.setVisible(true);
         }
 

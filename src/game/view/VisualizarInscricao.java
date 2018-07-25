@@ -5,6 +5,8 @@
  */
 package game.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author UNIVASF
@@ -17,11 +19,21 @@ public class VisualizarInscricao extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
+    private String cpf;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
     public VisualizarInscricao(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,9 +108,9 @@ public class VisualizarInscricao extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         PalestrasInscritas pal = new PalestrasInscritas(this, true);
+        pal.setCpf(getCpf());
+        //JOptionPane.showMessageDialog(null, "CPF: "+pal.getCpf());
         pal.setVisible(true);
-
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -158,4 +170,5 @@ public class VisualizarInscricao extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 }

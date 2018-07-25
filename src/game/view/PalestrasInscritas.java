@@ -5,6 +5,15 @@
  */
 package game.view;
 
+import game.entity.Evento;
+import game.util.HibernateUtil;
+import javax.swing.table.DefaultTableModel;
+import game.view.Formulario;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+
 /**
  *
  * @author UNIVASF
@@ -14,9 +23,40 @@ public class PalestrasInscritas extends javax.swing.JDialog {
     /**
      * Creates new form PalestrasInscritas
      */
+    private String cpf;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
+    
+    
     public PalestrasInscritas(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Criteria c = session.createCriteria(Evento.class);
+        ArrayList<Evento> eventoA = (ArrayList<Evento>) c.list();
+        session.getTransaction().commit();
+        
+        DefaultTableModel tabelaDePalestas = (DefaultTableModel) tblPalestrasDoUsuario.getModel();
+        Object[] eventoV = new Object[tabelaDePalestas.getColumnCount()];
+        for (int i = 0; i < eventoA.size(); i++) {
+            eventoV[0] = eventoA.get(i).getNome();
+            eventoV[1] = eventoA.get(i).getHorario();
+            eventoV[2] = eventoA.get(i).getDataEvent();
+            eventoV[3] = eventoA.get(i).getSala();
+            eventoV[4] = eventoA.get(i).getPalestrante();
+            eventoV[5] = eventoA.get(i).getTipo();
+            tabelaDePalestas.addRow(eventoV);
+        }
+        //JOptionPane.showMessageDialog(null, "CPF: "+getCpf());
     }
 
     /**
@@ -29,30 +69,37 @@ public class PalestrasInscritas extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPalestrasDoUsuario = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inscrições");
 
-        jTable1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPalestrasDoUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tblPalestrasDoUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome do Evento", "Horário", "Data", "Número da Sala", "Palestrante", "Tipo de palestra"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPalestrasDoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblPalestrasDoUsuario.setRowHeight(25);
+        jScrollPane1.setViewportView(tblPalestrasDoUsuario);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,6 +155,6 @@ public class PalestrasInscritas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblPalestrasDoUsuario;
     // End of variables declaration//GEN-END:variables
 }
